@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}ورود{% endblock %}
+{% block content %}
+<div class="form-card">
+  <h1>ورود به Nine Server</h1>
+  <p class="muted">نام کاربری سایت و رمز سایت خود را وارد کنید.</p>
+  <form method="post">
+    <label>نام کاربری سایت</label>
+    <input name="username" required maxlength="50">
+    <label>رمز عبور سایت</label>
+    <input name="password" type="password" required>
+    <button class="button" type="submit">ورود</button>
+  </form>
+  <p>حساب ندارید؟ <a href="{{ url_for('register') }}">ثبت‌نام</a></p>
+</div>
+{% endblock %}

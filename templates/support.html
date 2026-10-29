@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}پشتیبانی{% endblock %}
+{% block content %}
+<div class="form-card">
+  <h1>🎫 پشتیبانی</h1>
+  <p class="muted">موضوع تیکت آزاد است. برای پیگیری، نام Minecraft شما در حساب ثبت شده است.</p>
+  <form method="post">
+    <label>موضوع</label>
+    <input name="subject" required maxlength="100" placeholder="مثلاً مشکل خرید">
+    <label>پیام</label>
+    <textarea name="message" required maxlength="2000" rows="7"></textarea>
+    <button class="button" type="submit">ارسال تیکت</button>
+  </form>
+</div>
+
+<section>
+  <h2>تیکت‌های من</h2>
+  {% for ticket in tickets %}
+  <article class="ticket">
+    <div><strong>#{{ ticket["id"] }} — {{ ticket["subject"] }}</strong><span class="status">{{ ticket["status"] }}</span></div>
+    <p>{{ ticket["message"] }}</p>
+    {% if ticket["admin_reply"] %}<div class="reply"><strong>پاسخ ادمین:</strong> {{ ticket["admin_reply"] }}</div>{% endif %}
+  </article>
+  {% else %}
+  <div class="empty">هنوز تیکتی ثبت نکرده‌اید.</div>
+  {% endfor %}
+</section>
+{% endblock %}

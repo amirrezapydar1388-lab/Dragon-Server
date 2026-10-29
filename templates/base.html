@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Nine Server{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="{{ url_for('index') }}"><span>🐉</span> Nine Server</a>
+  <nav>
+    <a href="{{ url_for('index') }}">خانه</a>
+    <a href="{{ url_for('support') }}">پشتیبانی</a>
+    {% if current_user %}
+      <a href="{{ url_for('profile') }}">پروفایل</a>
+      {% if current_is_admin %}<a href="{{ url_for('admin') }}">مدیریت</a>{% endif %}
+      <a href="{{ url_for('logout') }}">خروج</a>
+    {% else %}
+      <a href="{{ url_for('login') }}">ورود</a>
+      <a class="nav-button" href="{{ url_for('register') }}">ثبت‌نام</a>
+    {% endif %}
+  </nav>
+</header>
+
+<main class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+      <div class="flash {{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+
+<footer>Nine Server • ساخته‌شده با Python و Flask</footer>
+</body>
+</html>

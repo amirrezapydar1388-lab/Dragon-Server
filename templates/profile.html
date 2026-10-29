@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}پروفایل{% endblock %}
+{% block content %}
+<div class="profile-card">
+  <div class="avatar">
+    {% if user["avatar"] %}<img src="{{ user['avatar'] }}" alt="avatar">{% else %}🐉{% endif %}
+  </div>
+  <h1>{{ user["username"] }}</h1>
+  <p class="muted">Minecraft: {{ user["minecraft_username"] }}</p>
+  <p>{{ user["bio"] or "هنوز بیویی تنظیم نشده است." }}</p>
+</div>
+
+<div class="form-card">
+  <h2>تنظیم پروفایل</h2>
+  <form method="post">
+    <label>متن معرفی</label>
+    <textarea name="bio" maxlength="500" rows="5">{{ user["bio"] }}</textarea>
+    <label>آدرس تصویر پروفایل</label>
+    <input name="avatar" value="{{ user['avatar'] }}" maxlength="500" placeholder="https://...">
+    <button class="button" type="submit">ذخیره</button>
+  </form>
+</div>
+{% endblock %}

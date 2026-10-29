@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Nine Server{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <span class="badge">NINE SERVER</span>
+    <h1>قدرت اژدها،<br><span>شروع ماجراجویی</span></h1>
+    <p>پنل و سایت رسمی سرور Nine؛ پشتیبانی، شاپ و پروفایل بازیکنان در یکجا.</p>
+    <div class="actions">
+      <a class="button" href="{{ url_for('register') }}">ساخت حساب</a>
+      <a class="button secondary" href="{{ url_for('support') }}">پشتیبانی</a>
+    </div>
+  </div>
+  <div class="nine-card">🐉</div>
+</section>
+
+<section>
+  <div class="section-head">
+    <h2>🛒 شاپ Dragon</h2>
+    <span>{{ items|length }} آیتم</span>
+  </div>
+  <div class="shop-grid">
+    {% for item in items %}
+    <article class="shop-card">
+      <div class="item-icon">{{ item["icon"] }}</div>
+      <div class="item-category">{{ item["category"] }}</div>
+      <h3>{{ item["name"] }}</h3>
+      <p>{{ item["description"] }}</p>
+      <strong>{{ "{:,}".format(item["price"]) }} تومان</strong>
+    </article>
+    {% else %}
+      <div class="empty">هنوز آیتمی در شاپ قرار نگرفته است.</div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

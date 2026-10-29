@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}ثبت‌نام{% endblock %}
+{% block content %}
+<div class="form-card">
+  <h1>ساخت حساب</h1>
+  <p class="muted">برای امنیت، رمز حساب سایت را تعیین می‌کنید. رمز حساب Minecraft خود را اینجا وارد نکنید.</p>
+  <form method="post">
+    <label>نام کاربری سایت</label>
+    <input name="username" required minlength="3" maxlength="50">
+    <label>نام کاربری Minecraft</label>
+    <input name="minecraft_username" required minlength="3" maxlength="50">
+    <label>رمز عبور سایت</label>
+    <input name="password" type="password" required minlength="8">
+    <button class="button" type="submit">ساخت حساب</button>
+  </form>
+</div>
+{% endblock %}

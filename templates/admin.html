@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}مدیریت Nine Server{% endblock %}
+{% block content %}
+<h1>🛡️ پنل مدیریت</h1>
+
+<section class="admin-section">
+<h2>🎫 تیکت‌ها</h2>
+{% for t in tickets %}
+<div class="admin-card">
+  <div><strong>#{{ t["id"] }} — {{ t["subject"] }}</strong></div>
+  <small>{{ t["username"] }} / Minecraft: {{ t["minecraft_username"] }}</small>
+  <p>{{ t["message"] }}</p>
+  <form method="post" action="{{ url_for('reply_ticket', ticket_id=t['id']) }}">
+    <textarea name="reply" rows="3" placeholder="پاسخ ادمین">{{ t["admin_reply"] }}</textarea>
+    <select name="status"><option value="open" {% if t["status"]=="open" %}selected{% endif %}>باز</option><option value="closed" {% if t["status"]=="closed" %}selected{% endif %}>بسته</option></select>
+    <button class="button" type="submit">ذخیره</button>
+  </form>
+</div>
+{% else %}<div class="empty">تیکتی وجود ندارد.</div>{% endfor %}
+</section>
+
+<section class="admin-section">
+<h2>🛒 مدیریت شاپ</h2>
+<form class="admin-form" method="post" action="{{ url_for('add_shop_item') }}">
+  <input name="name" placeholder="نام آیتم" required>
+  <input name="category" placeholder="دسته‌بندی" value="سایر">
+  <input name="price" type="number" min="0" placeholder="قیمت">
+  <input name="icon" placeholder="ایموجی" value="🐉">
+  <input name="description" placeholder="توضیح">
+  <button class="button" type="submit">افزودن</button>
+</form>
+{% for item in items %}
+<div class="admin-row">
+  <span>{{ item["icon"] }} {{ item["name"] }} — {{ item["price"] }} تومان</span>
+  <span>
+    <form class="inline" method="post" action="{{ url_for('toggle_shop_item', item_id=item['id']) }}"><button type="submit">{{ "فعال" if item["active"] else "غیرفعال" }}</button></form>
+    <form class="inline" method="post" action="{{ url_for('delete_shop_item', item_id=item['id']) }}"><button type="submit">حذف</button></form>
+  </span>
+</div>
+{% endfor %}
+</section>
+
+<section class="admin-section">
+<h2>👑 افزودن ادمین</h2>
+<form class="admin-form" method="post" action="{{ url_for('add_admin') }}">
+  <input name="minecraft_username" placeholder="Minecraft username" required>
+  <button class="button" type="submit">افزودن ادمین</button>
+</form>
+<p class="muted">ادمین فقط با نام Minecraft ثبت‌شده در یک حساب موجود می‌تواند اضافه شود.</p>
+{% for a in admins %}
+<div class="admin-row">
+  <span>{{ a["username"] }} — {{ a["minecraft_username"] }}</span>
+  {% if a["username"] != config.get("OWNER_USERNAME", "") %}
+  <form method="post" action="{{ url_for('remove_admin', user_id=a['id']) }}"><button type="submit">حذف دسترسی</button></form>
+  {% endif %}
+</div>
+{% endfor %}
+</section>
+{% endblock %}
